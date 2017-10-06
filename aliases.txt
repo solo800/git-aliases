@@ -1,0 +1,36 @@
+# Basic Git stuff
+alias glpdev="git checkout v3/develop"
+alias gstat="git status"
+alias gbr="git branch"
+alias gadd="git add ."
+alias grcon="git rebase --continue"
+alias grskip="git rebase --skip"
+alias gstash="git stash"
+alias gpop="git stash pop"
+
+# Make sure your git branch is displayed in your CLI prompt
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+# Change the command prompt path
+export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# Search all your local branches for a specific branch and output it's name
+get_branch () {
+    git branch -a | grep $1
+}
+
+# Create a git branch and check it out or if it exists just check it out
+gco () {
+    if git rev-parse --quiet --verify $1 > /dev/null;
+        then
+            # branch found, check it out
+            git checkout $1
+        else
+            # did not find branch so create and checkout new one
+            git checkout -b $1
+    fi
+}
+
+# Often times when I'm working on a specific project for a long period of time I'll add a specific alias to get me to the master/develop or whatever branch I usualy branch off of and rebase off of
+alias gdev="git checkout v3/develop"
