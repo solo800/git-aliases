@@ -32,5 +32,18 @@ gco () {
     fi
 }
 
+# Push origin of new branch to git
+gpusho () {
+    git push origin $1 -u
+}
+# Push existing branch to remote git (usually after rebase)
+gpushf () {
+    git push origin $1 -f
+}
+# Start interactive rebase
+grebasei () {
+    git rebase v3/develop -i
+}
+
 # Often times when I'm working on a specific project for a long period of time I'll add a specific alias to get me to the master/develop or whatever branch I usualy branch off of and rebase off of
 alias gdev="git checkout v3/develop"
